@@ -36,6 +36,8 @@ namespace matrix_library {
 
         void initialize_randomly();
 
+        void initialize_zeros();
+
         void resize(size_t new_row_count, size_t new_column_count);
 
         float* get_data() const;

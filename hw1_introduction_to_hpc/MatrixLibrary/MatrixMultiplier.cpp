@@ -7,12 +7,13 @@ namespace matrix_library {
         assert(lhs.get_row_count() == result.get_row_count());
         assert(rhs.get_column_count() == result.get_column_count());
 
-        for (int i = 0 ; i < lhs.get_row_count(); i++)
+        result.initialize_zeros();
+
+        for (int k = 0; k < lhs.get_column_count(); k++)
         {
-            for (int j = 0;  j < rhs.get_column_count(); j++)
+            for (int i = 0 ; i < lhs.get_row_count(); i++)
             {
-                result[i * result.get_column_count() + j] = 0.0f;
-                for (int k = 0; k < lhs.get_column_count(); k++)
+                for (int j = 0;  j < rhs.get_column_count(); j++)
                 {
                     result[i * result.get_column_count() + j] += lhs[i * lhs.get_column_count() + k] * rhs[k * rhs.get_column_count() + j];
                 }

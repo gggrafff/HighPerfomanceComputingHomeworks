@@ -184,6 +184,14 @@ namespace matrix_library {
         }
     }
 
+    void Matrix::initialize_zeros() {
+        for (int i = 0; i < row_count_; ++i) {
+            for (int j = 0; j < column_count_; ++j) {
+                data_[i * column_count_ + j] = 0.0f;
+            }
+        }
+    }
+
     void Matrix::resize(size_t new_row_count, size_t new_column_count) {
         assert(!is_pointer_);
 
