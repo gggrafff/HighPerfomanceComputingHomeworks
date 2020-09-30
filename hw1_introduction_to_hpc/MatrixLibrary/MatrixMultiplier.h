@@ -11,12 +11,38 @@ namespace matrix_library {
 
     class MatrixMultiplier{
     public:
+        /**
+         * @brief Умножение матриц по определению произведения матриц.
+         * @param lhs Первый множитель.
+         * @param rhs Второй множитель.
+         * @param result Произведение матриц.
+         */
         static void multiplication_by_definition(const Matrix& lhs, const Matrix& rhs, Matrix& result);
 
+        /**
+         * @brief Умножение матриц по определению произведения матриц.
+         * @param lhs Первый множитель.
+         * @param rhs Второй множитель.
+         * @return Произведение матриц.
+         */
         static Matrix multiplication_by_definition(const Matrix& lhs, const Matrix& rhs);
 
+        /**
+         * @brief Умножение матриц с использованием библиотеки cBLAS.
+         * @param lhs Первый множитель.
+         * @param rhs Второй множитель.
+         * @return Произведение матриц.
+         */
         static Matrix multiplication_cblas(const Matrix& lhs, const Matrix& rhs);
 
+        /**
+         * @brief Умножение матриц с использованием алгоритма Винограда-Штрассена.
+         * @details Только для квадратных матриц.
+         * @details Обёртка алгоритма.
+         * @param lhs Первый множитель.
+         * @param rhs Второй множитель.
+         * @return Произведение матриц.
+         */
         static Matrix multiplication_strassen(Matrix& lhs, Matrix& rhs);
     private:
         /**
@@ -28,6 +54,14 @@ namespace matrix_library {
          */
         static size_t round_log2(size_t number);
 
+        /**
+         * @brief Умножение матриц с использованием алгоритма Винограда-Штрассена.
+         * @details Только для квадратных матриц.
+         * @details Рекурсивная часть алгоритма.
+         * @param lhs Первый множитель.
+         * @param rhs Второй множитель.
+         * @param result Произведение матриц.
+         */
         static void multiplication_strassen_implementation(
                 const Matrix& lhs, const Matrix& rhs, Matrix& result);
     };

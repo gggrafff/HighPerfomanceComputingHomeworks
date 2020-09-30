@@ -2,22 +2,29 @@
 
 namespace matrix_library {
 
-    Matrix::Matrix(float *data, size_t row_count, size_t column_count) :
-            data_(data),
+    Matrix::Matrix(const Matrix& original, size_t row_count, size_t column_count, size_t offset_x, size_t offset_y) :
+            data_(original.data_),
             row_count_(row_count),
             column_count_(column_count),
-            is_pointer_(true) {}
+            is_pointer_(true),
+            offset_x_(original.offset_x_ + offset_x),
+            offset_y_(original.offset_y_ + offset_y),
+            original_row_count_(original.original_row_count_),
+            original_column_count_(original.original_column_count_){
+        assert(offset_x + column_count_ <= original_column_count_);
+        assert(offset_y + row_count_ <= original_row_count_);
+    }
 
     Matrix::Matrix(size_t row_count, size_t column_count) :
             data_(new float[row_count * column_count]),
             row_count_(row_count),
             column_count_(column_count),
-            is_pointer_(false) {
-        for (int i = 0; i < row_count_; ++i) {
-            for (int j = 0; j < column_count_; ++j) {
-                data_[i * column_count_ + j] = 0.0f;
-            }
-        }
+            is_pointer_(false),
+            offset_x_(0),
+            offset_y_(0),
+            original_row_count_(row_count),
+            original_column_count_(column_count){
+        initialize_zeros();
     }
 
     Matrix::~Matrix() {
@@ -30,31 +37,33 @@ namespace matrix_library {
         is_pointer_ = false;
         row_count_ = other.row_count_;
         column_count_ = other.column_count_;
+        original_row_count_ = row_count_;
+        original_column_count_ = column_count_;
         data_ = new float[row_count_ * column_count_];
 
-        for (int i = 0; i < row_count_; ++i) {
-            for (int j = 0; j < column_count_; ++j) {
-                data_[i * column_count_ + j] = other.data_[i * column_count_ + j];
+        for (size_t i = 0; i < row_count_; ++i) {
+            for (size_t j = 0; j < column_count_; ++j) {
+                get_element(i, j) = other.get_element(i, j);
             }
         }
     }
 
-    Matrix::Matrix(Matrix &&other) {
+    Matrix::Matrix(Matrix&& other) noexcept {
+        is_pointer_ = false;
+        row_count_ = other.row_count_;
+        column_count_ = other.column_count_;
+        original_row_count_ = row_count_;
+        original_column_count_ = column_count_;
+
         if (!other.is_pointer_) {
-            is_pointer_ = false;
-            row_count_ = other.row_count_;
-            column_count_ = other.column_count_;
             data_ = other.data_;
             other.data_ = nullptr;
         } else {
-            is_pointer_ = false;
-            row_count_ = other.row_count_;
-            column_count_ = other.column_count_;
             data_ = new float[row_count_ * column_count_];
 
-            for (int i = 0; i < row_count_; ++i) {
-                for (int j = 0; j < column_count_; ++j) {
-                    data_[i * column_count_ + j] = other.data_[i * column_count_ + j];
+            for (size_t i = 0; i < row_count_; ++i) {
+                for (size_t j = 0; j < column_count_; ++j) {
+                    get_element(i, j) = other.get_element(i, j);
                 }
             }
         }
@@ -68,26 +77,28 @@ namespace matrix_library {
             delete[] data_;
             row_count_ = rhs.row_count_;
             column_count_ = rhs.column_count_;
+            original_row_count_ = row_count_;
+            original_column_count_ = column_count_;
             data_ = new float[row_count_ * column_count_];
-            for (int i = 0; i < row_count_; ++i) {
-                for (int j = 0; j < column_count_; ++j) {
-                    data_[i * column_count_ + j] = rhs.data_[i * column_count_ + j];
+            for (size_t i = 0; i < row_count_; ++i) {
+                for (size_t j = 0; j < column_count_; ++j) {
+                    get_element(i, j) = rhs.get_element(i, j);
                 }
             }
         } else {
             assert(row_count_ == rhs.row_count_);
             assert(column_count_ == rhs.column_count_);
 
-            for (int i = 0; i < row_count_; ++i) {
-                for (int j = 0; j < column_count_; ++j) {
-                    data_[i * column_count_ + j] = rhs.data_[i * column_count_ + j];
+            for (size_t i = 0; i < row_count_; ++i) {
+                for (size_t j = 0; j < column_count_; ++j) {
+                    get_element(i, j) = rhs.get_element(i, j);
                 }
             }
         }
         return *this;
     }
 
-    Matrix &Matrix::operator=(Matrix &&rhs) {
+    Matrix &Matrix::operator=(Matrix&& rhs) noexcept {
         if (this == &rhs){
             return *this;
         }
@@ -95,27 +106,21 @@ namespace matrix_library {
             delete[] data_;
             row_count_ = rhs.row_count_;
             column_count_ = rhs.column_count_;
+            original_row_count_ = row_count_;
+            original_column_count_ = column_count_;
             data_ = rhs.data_;
             rhs.data_ = nullptr;
         } else {
             assert(row_count_ == rhs.row_count_);
             assert(column_count_ == rhs.column_count_);
 
-            for (int i = 0; i < row_count_; ++i) {
-                for (int j = 0; j < column_count_; ++j) {
-                    data_[i * column_count_ + j] = rhs.data_[i * column_count_ + j];
+            for (size_t i = 0; i < row_count_; ++i) {
+                for (size_t j = 0; j < column_count_; ++j) {
+                    get_element(i, j) = rhs.get_element(i, j);
                 }
             }
         }
         return *this;
-    }
-
-    float &Matrix::operator[](size_t element_index) {
-        return data_[element_index];
-    }
-
-    const float &Matrix::operator[](size_t element_index) const {
-        return data_[element_index];
     }
 
     Matrix Matrix::operator+(const Matrix &rhs) const {
@@ -123,9 +128,9 @@ namespace matrix_library {
         assert(column_count_ == rhs.column_count_);
 
         Matrix result(row_count_, column_count_);
-        for (int i = 0; i < row_count_; ++i) {
-            for (int j = 0; j < column_count_; ++j) {
-                result[i * column_count_ + j] = data_[i * column_count_ + j] + rhs[i * column_count_ + j];
+        for (size_t i = 0; i < row_count_; ++i) {
+            for (size_t j = 0; j < column_count_; ++j) {
+                result.get_element(i, j) = get_element(i, j) + rhs.get_element(i, j);
             }
         }
 
@@ -137,9 +142,9 @@ namespace matrix_library {
         assert(column_count_ == rhs.column_count_);
 
         Matrix result(row_count_, column_count_);
-        for (int i = 0; i < row_count_; ++i) {
-            for (int j = 0; j < column_count_; ++j) {
-                result[i * column_count_ + j] = data_[i * column_count_ + j] - rhs[i * column_count_ + j];
+        for (size_t i = 0; i < row_count_; ++i) {
+            for (size_t j = 0; j < column_count_; ++j) {
+                result.get_element(i, j) = get_element(i, j) - rhs.get_element(i, j);
             }
         }
 
@@ -150,9 +155,9 @@ namespace matrix_library {
         assert(row_count_ == rhs.row_count_);
         assert(column_count_ == rhs.column_count_);
 
-        for (int i = 0; i < row_count_; ++i) {
-            for (int j = 0; j < column_count_; ++j) {
-                data_[i * column_count_ + j] += rhs[i * column_count_ + j];
+        for (size_t i = 0; i < row_count_; ++i) {
+            for (size_t j = 0; j < column_count_; ++j) {
+                get_element(i, j) += rhs.get_element(i, j);
             }
         }
 
@@ -163,9 +168,9 @@ namespace matrix_library {
         assert(row_count_ == rhs.row_count_);
         assert(column_count_ == rhs.column_count_);
 
-        for (int i = 0; i < row_count_; ++i) {
-            for (int j = 0; j < column_count_; ++j) {
-                data_[i * column_count_ + j] -= rhs[i * column_count_ + j];
+        for (size_t i = 0; i < row_count_; ++i) {
+            for (size_t j = 0; j < column_count_; ++j) {
+                get_element(i, j) -= rhs.get_element(i, j);
             }
         }
 
@@ -175,11 +180,11 @@ namespace matrix_library {
     void Matrix::initialize_randomly() {
         std::random_device rd;  //Will be used to obtain a seed for the random number engine
         std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
-        std::uniform_real_distribution<> dis(0.0, 1.0);
+        std::uniform_real_distribution<float> dis(0.0f, 1.0f);
 
-        for (int i = 0; i < row_count_; ++i) {
-            for (int j = 0; j < column_count_; ++j) {
-                data_[i * column_count_ + j] = dis(gen);
+        for (size_t i = 0; i < row_count_; ++i) {
+            for (size_t j = 0; j < column_count_; ++j) {
+                get_element(i, j) = dis(gen);
             }
         }
     }
@@ -187,7 +192,7 @@ namespace matrix_library {
     void Matrix::initialize_zeros() {
         for (int i = 0; i < row_count_; ++i) {
             for (int j = 0; j < column_count_; ++j) {
-                data_[i * column_count_ + j] = 0.0f;
+                get_element(i, j) = 0.0f;
             }
         }
     }
@@ -200,10 +205,10 @@ namespace matrix_library {
         }
 
         float* new_data = new float[new_row_count * new_column_count];
-        for (int i = 0; i < new_row_count; ++i) {
-            for (int j = 0; j < new_column_count; ++j) {
+        for (size_t i = 0; i < new_row_count; ++i) {
+            for (size_t j = 0; j < new_column_count; ++j) {
                 if ((i < row_count_) && (j < column_count_)) {
-                    new_data[i * new_column_count + j] = data_[i * column_count_ + j];
+                    new_data[i * new_column_count + j] = get_element(i, j);
                 } else {
                     new_data[i * new_column_count + j] = 0.0f;
                 }
@@ -215,6 +220,8 @@ namespace matrix_library {
 
         row_count_ = new_row_count;
         column_count_ = new_column_count;
+        original_row_count_ = row_count_;
+        original_column_count_ = column_count_;
     }
 
     float* Matrix::get_data() const {
@@ -231,9 +238,9 @@ namespace matrix_library {
 
     void Matrix::print(std::ostream &stream) const {
         stream << std::endl;
-        for (int i = 0; i < row_count_; ++i) {
-            for (int j = 0; j < column_count_; ++j) {
-                stream << data_[i * column_count_ + j] << " ";
+        for (size_t i = 0; i < row_count_; ++i) {
+            for (size_t j = 0; j < column_count_; ++j) {
+                stream << get_element(i, j) << " ";
             }
             stream << std::endl;
         }
