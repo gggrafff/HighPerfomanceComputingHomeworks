@@ -88,47 +88,47 @@ UBUNTU_CODENAME=bionic
 ```bash
 $ ./TimeMeasurer 512 3
 3 launches were carried out.
-The multiplication by definition average duration of two 512x512 square matrices is 1734945 us.
-The multiplication with BLAS average duration of two 512x512 square matrices is 2126 us.
-The multiplication with Strassen's algorithm average duration of two 512x512 square matrices is 1328853 us.
+The multiplication by definition average duration of two 512x512 square matrices is 1.73 s.
+The multiplication with BLAS average duration of two 512x512 square matrices is 2.13 ms.
+The multiplication with Strassen's algorithm average duration of two 512x512 square matrices is 1.33 s.
 $ ./TimeMeasurer 1024 3
 3 launches were carried out.
-The multiplication by definition average duration of two 1024x1024 square matrices is 13854523 us.
-The multiplication with BLAS average duration of two 1024x1024 square matrices is 11821 us.
-The multiplication with Strassen's algorithm average duration of two 1024x1024 square matrices is 9332067 us.
+The multiplication by definition average duration of two 1024x1024 square matrices is 13.85 s.
+The multiplication with BLAS average duration of two 1024x1024 square matrices is 11.82 ms.
+The multiplication with Strassen's algorithm average duration of two 1024x1024 square matrices is 9.33 s.
 $ ./TimeMeasurer 2048 3
 3 launches were carried out.
-The multiplication by definition average duration of two 2048x2048 square matrices is 110356849 us.
-The multiplication with BLAS average duration of two 2048x2048 square matrices is 74814 us.
-The multiplication with Strassen's algorithm average duration of two 2048x2048 square matrices is 65331132 us.
+The multiplication by definition average duration of two 2048x2048 square matrices is 1.84 min.
+The multiplication with BLAS average duration of two 2048x2048 square matrices is 74.81 ms.
+The multiplication with Strassen's algorithm average duration of two 2048x2048 square matrices is 1.09 min.
 $ ./TimeMeasurer 4096 3
 3 launches were carried out.
-The multiplication by definition average duration of two 4096x4096 square matrices is 881802114 us.
-The multiplication with BLAS average duration of two 4096x4096 square matrices is 534938 us.
-The multiplication with Strassen's algorithm average duration of two 4096x4096 square matrices is 456781432 us.
+The multiplication by definition average duration of two 4096x4096 square matrices is 14.7 min.
+The multiplication with BLAS average duration of two 4096x4096 square matrices is 534.94 ms.
+The multiplication with Strassen's algorithm average duration of two 4096x4096 square matrices is 7.61 min.
 ```
 #### Release сборка (-O3)
 ```bash
 $ ./TimeMeasurer 512 3
 3 launches were carried out.
-The multiplication by definition average duration of two 512x512 square matrices is 396904 us.
-The multiplication with BLAS average duration of two 512x512 square matrices is 1027 us.
-The multiplication with Strassen's algorithm average duration of two 512x512 square matrices is 281116 us.
+The multiplication by definition average duration of two 512x512 square matrices is 396.90 ms.
+The multiplication with BLAS average duration of two 512x512 square matrices is 1.03 ms.
+The multiplication with Strassen's algorithm average duration of two 512x512 square matrices is 281.12 ms.
 $ ./TimeMeasurer 1024 3
 3 launches were carried out.
-The multiplication by definition average duration of two 1024x1024 square matrices is 3246655 us.
-The multiplication with BLAS average duration of two 1024x1024 square matrices is 7741 us.
-The multiplication with Strassen's algorithm average duration of two 1024x1024 square matrices is 1973570 us.
+The multiplication by definition average duration of two 1024x1024 square matrices is 3.25 s.
+The multiplication with BLAS average duration of two 1024x1024 square matrices is 7.74 ms.
+The multiplication with Strassen's algorithm average duration of two 1024x1024 square matrices is 1.97 s.
 $ ./TimeMeasurer 2048 3
 3 launches were carried out.
-The multiplication by definition average duration of two 2048x2048 square matrices is 25838455 us.
-The multiplication with BLAS average duration of two 2048x2048 square matrices is 57231 us.
-The multiplication with Strassen's algorithm average duration of two 2048x2048 square matrices is 13775069 us.
+The multiplication by definition average duration of two 2048x2048 square matrices is 25.84 s.
+The multiplication with BLAS average duration of two 2048x2048 square matrices is 57.23 ms.
+The multiplication with Strassen's algorithm average duration of two 2048x2048 square matrices is 13.78 s.
 $ ./TimeMeasurer 4096 3
 3 launches were carried out.
-The multiplication by definition average duration of two 4096x4096 square matrices is 204655638 us.
-The multiplication with BLAS average duration of two 4096x4096 square matrices is 456187 us.
-The multiplication with Strassen's algorithm average duration of two 4096x4096 square matrices is 96690513 us.
+The multiplication by definition average duration of two 4096x4096 square matrices is 3.41 min.
+The multiplication with BLAS average duration of two 4096x4096 square matrices is 456.19 ms.
+The multiplication with Strassen's algorithm average duration of two 4096x4096 square matrices is 1.61 min.
 ```
 ## На виртуальной машине
 ### Процессор
@@ -180,47 +180,47 @@ UBUNTU_CODENAME=xenial
 ```bash
 $ ./TimeMeasurer 512 3
 3 launches were carried out.
-The multiplication by definition average duration of two 512x512 square matrices is 2223209 us.
-The multiplication with BLAS average duration of two 512x512 square matrices is 8259 us.
-The multiplication with Strassen's algorithm average duration of two 512x512 square matrices is 1628016 us.
+The multiplication by definition average duration of two 512x512 square matrices is 2.22 s.
+The multiplication with BLAS average duration of two 512x512 square matrices is 8.26 ms.
+The multiplication with Strassen's algorithm average duration of two 512x512 square matrices is 1.63 s.
 $ ./TimeMeasurer 1024 3
 3 launches were carried out.
-The multiplication by definition average duration of two 1024x1024 square matrices is 18151767 us.
-The multiplication with BLAS average duration of two 1024x1024 square matrices is 57435 us.
-The multiplication with Strassen's algorithm average duration of two 1024x1024 square matrices is 11927771 us.
+The multiplication by definition average duration of two 1024x1024 square matrices is 18.15 s.
+The multiplication with BLAS average duration of two 1024x1024 square matrices is 57.44 ms.
+The multiplication with Strassen's algorithm average duration of two 1024x1024 square matrices is 11.93 s.
 $ ./TimeMeasurer 2048 3
 3 launches were carried out.
-The multiplication by definition average duration of two 2048x2048 square matrices is 143992555 us.
-The multiplication with BLAS average duration of two 2048x2048 square matrices is 413452 us.
-The multiplication with Strassen's algorithm average duration of two 2048x2048 square matrices is 80947659 us.
+The multiplication by definition average duration of two 2048x2048 square matrices is 2.4 min.
+The multiplication with BLAS average duration of two 2048x2048 square matrices is 413.45 ms.
+The multiplication with Strassen's algorithm average duration of two 2048x2048 square matrices is 1.35 min.
 $ ./TimeMeasurer 4096 3
 3 launches were carried out.
-The multiplication by definition average duration of two 4096x4096 square matrices is 1151119789 us.
-The multiplication with BLAS average duration of two 4096x4096 square matrices is 3131325 us.
-The multiplication with Strassen's algorithm average duration of two 4096x4096 square matrices is 566671520 us.
+The multiplication by definition average duration of two 4096x4096 square matrices is 19.19 min.
+The multiplication with BLAS average duration of two 4096x4096 square matrices is 3.13 s.
+The multiplication with Strassen's algorithm average duration of two 4096x4096 square matrices is 9.44 min.
 ```
 #### Release сборка (-O3)
 ```bash
 $ ./TimeMeasurer 512 3
 3 launches were carried out.
-The multiplication by definition average duration of two 512x512 square matrices is 601815 us.
-The multiplication with BLAS average duration of two 512x512 square matrices is 7733 us.
-The multiplication with Strassen's algorithm average duration of two 512x512 square matrices is 427600 us.
+The multiplication by definition average duration of two 512x512 square matrices is 601.82 ms.
+The multiplication with BLAS average duration of two 512x512 square matrices is 7.73 ms.
+The multiplication with Strassen's algorithm average duration of two 512x512 square matrices is 427.6 ms.
 $ ./TimeMeasurer 1024 3
 3 launches were carried out.
-The multiplication by definition average duration of two 1024x1024 square matrices is 4846813 us.
-The multiplication with BLAS average duration of two 1024x1024 square matrices is 46760 us.
-The multiplication with Strassen's algorithm average duration of two 1024x1024 square matrices is 2974621 us.
+The multiplication by definition average duration of two 1024x1024 square matrices is 4.85 s.
+The multiplication with BLAS average duration of two 1024x1024 square matrices is 46.76 ms.
+The multiplication with Strassen's algorithm average duration of two 1024x1024 square matrices is 2.97 s.
 $ ./TimeMeasurer 2048 3
 3 launches were carried out.
-The multiplication by definition average duration of two 2048x2048 square matrices is 38558779 us.
-The multiplication with BLAS average duration of two 2048x2048 square matrices is 373799 us.
-The multiplication with Strassen's algorithm average duration of two 2048x2048 square matrices is 20770051 us.
+The multiplication by definition average duration of two 2048x2048 square matrices is 38.56 s.
+The multiplication with BLAS average duration of two 2048x2048 square matrices is 373.8 ms.
+The multiplication with Strassen's algorithm average duration of two 2048x2048 square matrices is 20.77 s.
 $ ./TimeMeasurer 4096 3
 3 launches were carried out.
-The multiplication by definition average duration of two 4096x4096 square matrices is 309634392 us.
-The multiplication with BLAS average duration of two 4096x4096 square matrices is 3041926 us.
-The multiplication with Strassen's algorithm average duration of two 4096x4096 square matrices is 146223733 us.
+The multiplication by definition average duration of two 4096x4096 square matrices is 5.16 min.
+The multiplication with BLAS average duration of two 4096x4096 square matrices is 3.04 s.
+The multiplication with Strassen's algorithm average duration of two 4096x4096 square matrices is 2.44 min.
 ```
 ## В docker-контейнере
 Шпаргалка по запуску контейнеров для начинающих:  
@@ -280,45 +280,45 @@ UBUNTU_CODENAME=bionic
 ```bash
 # ./TimeMeasurer 512 3
 3 launches were carried out.
-The multiplication by definition average duration of two 512x512 square matrices is 1939918 us.
-The multiplication with BLAS average duration of two 512x512 square matrices is 3099 us.
-The multiplication with Strassen's algorithm average duration of two 512x512 square matrices is 1529319 us.
+The multiplication by definition average duration of two 512x512 square matrices is 1.94 s.
+The multiplication with BLAS average duration of two 512x512 square matrices is 3.1 ms.
+The multiplication with Strassen's algorithm average duration of two 512x512 square matrices is 1.53 s.
 # ./TimeMeasurer 1024 3
 3 launches were carried out.
-The multiplication by definition average duration of two 1024x1024 square matrices is 15890634 us.
-The multiplication with BLAS average duration of two 1024x1024 square matrices is 16556 us.
-The multiplication with Strassen's algorithm average duration of two 1024x1024 square matrices is 11190381 us.
+The multiplication by definition average duration of two 1024x1024 square matrices is 15.89 s.
+The multiplication with BLAS average duration of two 1024x1024 square matrices is 16.56 ms.
+The multiplication with Strassen's algorithm average duration of two 1024x1024 square matrices is 11.19 s.
 # ./TimeMeasurer 2048 3
 3 launches were carried out.
-The multiplication by definition average duration of two 2048x2048 square matrices is 124050282 us.
-The multiplication with BLAS average duration of two 2048x2048 square matrices is 88741 us.
-The multiplication with Strassen's algorithm average duration of two 2048x2048 square matrices is 76075413 us.
+The multiplication by definition average duration of two 2048x2048 square matrices is 2.07 min.
+The multiplication with BLAS average duration of two 2048x2048 square matrices is 88.74 ms.
+The multiplication with Strassen's algorithm average duration of two 2048x2048 square matrices is 1.27 min.
 # ./TimeMeasurer 4096 3
 3 launches were carried out.
-The multiplication by definition average duration of two 4096x4096 square matrices is 988685366 us.
-The multiplication with BLAS average duration of two 4096x4096 square matrices is 592290 us.
-The multiplication with Strassen's algorithm average duration of two 4096x4096 square matrices is 537173016 us.
+The multiplication by definition average duration of two 4096x4096 square matrices is 16.48 min.
+The multiplication with BLAS average duration of two 4096x4096 square matrices is 592.29 ms.
+The multiplication with Strassen's algorithm average duration of two 4096x4096 square matrices is 8.95 min.
 ```
 #### Release сборка (-O3)
 ```bash
 # ./TimeMeasurer 512 3
 3 launches were carried out.
-The multiplication by definition average duration of two 512x512 square matrices is 679642 us.
-The multiplication with BLAS average duration of two 512x512 square matrices is 1030 us.
-The multiplication with Strassen's algorithm average duration of two 512x512 square matrices is 469852 us.
+The multiplication by definition average duration of two 512x512 square matrices is 679.64 ms.
+The multiplication with BLAS average duration of two 512x512 square matrices is 1.03 ms.
+The multiplication with Strassen's algorithm average duration of two 512x512 square matrices is 469.85 ms.
 # ./TimeMeasurer 1024 3
 3 launches were carried out.
-The multiplication by definition average duration of two 1024x1024 square matrices is 5539265 us.
-The multiplication with BLAS average duration of two 1024x1024 square matrices is 15336 us.
-The multiplication with Strassen's algorithm average duration of two 1024x1024 square matrices is 3395725 us.
+The multiplication by definition average duration of two 1024x1024 square matrices is 5.54 s.
+The multiplication with BLAS average duration of two 1024x1024 square matrices is 15.34 ms.
+The multiplication with Strassen's algorithm average duration of two 1024x1024 square matrices is 3.4 s.
 # ./TimeMeasurer 2048 3
 3 launches were carried out.
-The multiplication by definition average duration of two 2048x2048 square matrices is 44039002 us.
-The multiplication with BLAS average duration of two 2048x2048 square matrices is 103642 us.
-The multiplication with Strassen's algorithm average duration of two 2048x2048 square matrices is 23085737 us.
+The multiplication by definition average duration of two 2048x2048 square matrices is 44.04 s.
+The multiplication with BLAS average duration of two 2048x2048 square matrices is 103.64 ms.
+The multiplication with Strassen's algorithm average duration of two 2048x2048 square matrices is 23.09 s.
 # ./TimeMeasurer 4096 3
 3 launches were carried out.
-The multiplication by definition average duration of two 4096x4096 square matrices is 357899860 us.
-The multiplication with BLAS average duration of two 4096x4096 square matrices is 868603 us.
-The multiplication with Strassen's algorithm average duration of two 4096x4096 square matrices is 164290206 us.
+The multiplication by definition average duration of two 4096x4096 square matrices is 5.97 min.
+The multiplication with BLAS average duration of two 4096x4096 square matrices is 868.60 ms.
+The multiplication with Strassen's algorithm average duration of two 4096x4096 square matrices is 2.74 min.
 ```
