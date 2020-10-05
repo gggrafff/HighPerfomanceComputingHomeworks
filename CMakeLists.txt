@@ -3,4 +3,4 @@ project(HighPerfomanceComputingHomeworks)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_subdirectory(hw1_introduction_to_hpc)
+add_subdirectory(hw2_cblas)
