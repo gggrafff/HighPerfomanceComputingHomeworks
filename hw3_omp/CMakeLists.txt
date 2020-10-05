@@ -1,3 +1,3 @@
 project(hw3_omp)
 
-#add_subdirectory()
+add_subdirectory(LeastSquares)
