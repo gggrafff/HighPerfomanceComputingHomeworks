@@ -4,3 +4,4 @@ project(HighPerfomanceComputingHomeworks)
 set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory(hw2_cblas)
+add_subdirectory(hw4_pagerank)
