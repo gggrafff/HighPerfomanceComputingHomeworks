@@ -190,8 +190,8 @@ namespace matrix_library {
     }
 
     void Matrix::initialize_zeros() {
-        for (int i = 0; i < row_count_; ++i) {
-            for (int j = 0; j < column_count_; ++j) {
+        for (size_t i = 0; i < row_count_; ++i) {
+            for (size_t j = 0; j < column_count_; ++j) {
                 get_element(i, j) = 0.0f;
             }
         }
@@ -246,4 +246,36 @@ namespace matrix_library {
         }
         stream << std::endl;
     }
+
+    void Matrix::initialize_ones_diagonal() {
+        for (size_t i = 0; i < row_count_; ++i) {
+            for (size_t j = 0; j < column_count_; ++j) {
+                get_element(i, j) = 0.0f;
+            }
+            get_element(i, i) = 1.0f;
+        }
+    }
+
+    void Matrix::initialize_random_directed_unweighted_graph(float edge_probability) {
+        assert(edge_probability <= 1.0f);
+        assert(edge_probability >= 0.0f);
+        assert(get_row_count() == get_column_count());
+
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_real_distribution<float> dis(0.0f, 1.0f);
+
+        for (size_t i = 0; i < row_count_; ++i) {
+            for (size_t j = 0; j < column_count_; ++j) {
+                float random = dis(gen);
+                if (random <= edge_probability) {
+                    get_element(i, j) = 1.0f;
+                } else {
+                    get_element(i, j) = 0.0f;
+                }
+            }
+        }
+    }
+
+
 }

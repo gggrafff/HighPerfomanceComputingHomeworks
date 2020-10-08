@@ -13,6 +13,7 @@ namespace matrix_library {
      */
     class Matrix {
     public:
+        Matrix() = default;
         /**
          * @brief Конструктор для того чтобы сослаться на подматрицу существующей матрицы.
          * @param original Исходная матрица, в которой выделяем подматрицу.
@@ -121,6 +122,17 @@ namespace matrix_library {
          * @brief Заполняет матрицу нулями.
          */
         void initialize_zeros();
+
+        /**
+         * @brief Заполняет матрицу нулями везде, кроме главной диагонали. На главной диагонали стоят единицы.
+         */
+        void initialize_ones_diagonal();
+
+        /**
+         * @brief Создаёт случайную матрицу смежности для направленного невзвешенного графа.
+         * @param edge_probability Вероятность, с которой создаётся ребро между узлами.
+         */
+        void initialize_random_directed_unweighted_graph(float edge_probability=0.5f);
 
         /**
          * @brief Изменяет размер матрицы, дополняя нулями или обрезая края.
