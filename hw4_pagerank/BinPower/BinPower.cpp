@@ -6,6 +6,13 @@
 #include "Matrix.h"
 #include "MatrixMultiplier.h"
 
+
+/**
+ * @brief Возведение квадратной матрицы в степень за log2(power) умножений.
+ * @param matrix Основание степени. Матрица.
+ * @param power Показатель степени.
+ * @return Результат возведения матрицы в степень.
+ */
 matrix_library::Matrix binpow_cblas(matrix_library::Matrix matrix, uint64_t power) {
     assert(matrix.get_row_count() == matrix.get_column_count());
 
@@ -22,6 +29,11 @@ matrix_library::Matrix binpow_cblas(matrix_library::Matrix matrix, uint64_t powe
     return res;
 }
 
+/**
+ * @brief Конвертирует количество микросекунд в человекопонятный формат.
+ * @param duration_us Длительность в микросекундах.
+ * @return Строка с человекопонятной записью.
+ */
 std::string convert_us_to_human_readable(uint64_t duration_us){
     if (duration_us < 1e3) {
         return std::to_string(duration_us) + " us";
