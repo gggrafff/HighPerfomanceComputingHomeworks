@@ -10,6 +10,5 @@ set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQ
 target_include_directories(${TARGET_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/../hw2_cblas/MatrixLibrary/;${PROJECT_BINARY_DIR}/../hw2_cblas/MatrixLibrary/")
 
 # Link
-find_package(OpenMP REQUIRED)
-target_link_libraries(${TARGET_NAME} PRIVATE "MatrixLibrary_static;OpenMP::OpenMP_CXX")
+target_link_libraries(${TARGET_NAME} PRIVATE "MatrixLibrary_static")
 
