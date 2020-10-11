@@ -2,6 +2,19 @@
 #include <iostream>
 #include <iomanip>
 #include <chrono>
+#include <omp.h>
+
+namespace Eigen {
+    static bool no_more_assert = false;
+    struct eigen_assert_exception
+    {
+        eigen_assert_exception(void) {}
+        ~eigen_assert_exception() { Eigen::no_more_assert = false; }
+    };
+}
+
+#include <Eigen/Sparse>
+#include "gmm/gmm.h"
 
 #include "Matrix.h"
 #include "MatrixMultiplier.h"
@@ -26,6 +39,75 @@ matrix_library::Matrix binpow_cblas(matrix_library::Matrix matrix, uint64_t powe
         matrix = matrix_library::MatrixMultiplier::multiplication_cblas(matrix, matrix);
         power >>= 1;
     }
+    return res;
+}
+
+Eigen::SparseMatrix<float> binpow_sparse_eigen(Eigen::SparseMatrix<float> matrix, uint64_t power) {
+    assert(matrix.rows() == matrix.cols());
+
+    Eigen::SparseMatrix<float> res(matrix.rows(), matrix.rows());
+    for (size_t i = 0; i < matrix.rows(); ++i) {
+        res.insert(i, i) = 1.0f;
+    }
+    res.makeCompressed();
+
+    while (power) {
+        if (power & 1) {
+            res = (res * matrix).pruned(1e-5);
+            //res.makeCompressed();
+        }
+        matrix = (matrix * matrix).pruned(1e-5);
+        //matrix.makeCompressed();
+        power >>= 1;
+    }
+    return res;
+}
+
+gmm::row_matrix<gmm::wsvector<float>> binpow_sparse_gmm(gmm::row_matrix<gmm::wsvector<float>> matrix, uint64_t power) {
+    assert(matrix.nrows() == matrix.ncols());
+
+    gmm::row_matrix<gmm::wsvector<float>> res(matrix.nrows(), matrix.nrows());
+    for (size_t i = 0; i < matrix.nrows(); ++i) {
+        res(i, i) = 1.0f;
+    }
+    gmm::clean(res, 1e-5);
+
+    gmm::row_matrix<gmm::wsvector<float>> temp(matrix.nrows(), matrix.nrows());
+    while (power) {
+        if (power & 1) {
+            gmm::mult(res, matrix, temp);
+            gmm::clean(temp, 1e-5);
+            gmm::copy(temp, res);
+        }
+        gmm::mult(matrix, matrix, temp);
+        gmm::clean(temp, 1e-5);
+        gmm::copy(temp, matrix);
+        power >>= 1;
+    }
+    return res;
+}
+
+Eigen::SparseMatrix<float> convert_my_matrix_to_eigen_sparse_matrix(const matrix_library::Matrix &matrix){
+    Eigen::SparseMatrix<float> res(matrix.get_row_count(), matrix.get_column_count());
+    for (size_t i = 0; i < matrix.get_row_count(); ++i) {
+        for (size_t j = 0; j < matrix.get_column_count(); ++j) {
+            res.insert(i, j) = matrix.get_element(i, j);
+        }
+    }
+    res.makeCompressed();
+    return res;
+}
+
+gmm::row_matrix<gmm::wsvector<float>> convert_my_matrix_to_gmm_csc_matrix(const matrix_library::Matrix& matrix){
+    gmm::row_matrix<gmm::wsvector<float>> res(matrix.get_row_count(), matrix.get_column_count());
+    for (size_t i = 0; i < matrix.get_row_count(); ++i) {
+        for (size_t j = 0; j < matrix.get_column_count(); ++j) {
+            res(i, j) = matrix.get_element(i, j);
+        }
+    }
+
+    gmm::clean(res, 1e-5);
+
     return res;
 }
 
@@ -113,6 +195,37 @@ BinPower -n 8 -s 4 -p 0.2
 
     if (need_print) {
         after_several_steps.print();
+    }
+
+    std::cout << "Возведение матрицы в степень заняло " << convert_us_to_human_readable(elapsed_us.count()) << "." << std::endl << std::endl;
+
+    std::cout << "Умножаем с помощью eigen (для разреженных матриц)." << std::endl;
+    std::cout << "Количество используемых ядер: " << omp_get_num_procs() << std::endl;
+    omp_set_num_threads(omp_get_num_procs());
+    Eigen::setNbThreads(0);
+
+    auto graph_eigen = convert_my_matrix_to_eigen_sparse_matrix(graph);
+    begin = std::chrono::steady_clock::now();
+    auto after_several_steps_eigen = binpow_sparse_eigen(graph_eigen, steps_count);
+    end = std::chrono::steady_clock::now();
+    elapsed_us = std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
+
+    if (need_print) {
+        std::cout << after_several_steps_eigen << std::endl;
+    }
+
+    std::cout << "Возведение матрицы в степень заняло " << convert_us_to_human_readable(elapsed_us.count()) << "." << std::endl << std::endl;
+
+    std::cout << "Умножаем с помощью GMM++ (для разреженных матриц)." << std::endl;
+
+    auto graph_gmm = convert_my_matrix_to_gmm_csc_matrix(graph);
+    begin = std::chrono::steady_clock::now();
+    auto after_several_steps_gmm = binpow_sparse_gmm(graph_gmm, steps_count);
+    end = std::chrono::steady_clock::now();
+    elapsed_us = std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
+
+    if (need_print) {
+        std::cout << after_several_steps_gmm << std::endl;
     }
 
     std::cout << "Возведение матрицы в степень заняло " << convert_us_to_human_readable(elapsed_us.count()) << "." << std::endl << std::endl;
