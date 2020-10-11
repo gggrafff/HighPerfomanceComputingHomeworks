@@ -166,6 +166,72 @@ namespace matrix_library {
          */
         void print(std::ostream &stream = std::cout) const;
 
+        /**
+         * @brief Проверить, все ли элементы в столбце нулевые.
+         * @param index Индекс столбца.
+         * @return True, если столбец нулевой, иначе - false.
+         */
+        bool column_is_zero(size_t index) const;
+
+        /**
+         * @brief Добавить к каждому элементу столбца заданное число.
+         * @param column_index Индекс столбца.
+         * @param addend Прибавляемое число.
+         */
+        void add_to_column(size_t column_index, float addend);
+
+        /**
+         * @brief Поделить каждый элемент столбца на заданное число.
+         * @param column_index Индекс столбца.
+         * @param divisor Делитель.
+         */
+        void divide_column(size_t column_index, float divisor);
+
+        /**
+         * @brief Найти сумму элементов столбца.
+         * @param column_index Индекс столбца.
+         * @return Сумма элементов в столбце.
+         */
+        float sum_of_column(size_t column_index);
+
+        /**
+         * @brief Нормировать элементы в столбцах. Сумма элементов в каждом столбце станет равна единице.
+         */
+        void normalize_columns();
+
+        /**
+         * @brief Установить элементы на главной диагонали равными указанному значению.
+         * @param value Значение элементов на главной диагонали.
+         */
+        void set_main_diagonal(float value);
+
+        /**
+         * @brief Норма матрицы.
+         * @return Значение нормы.
+         */
+        float norm_inf();
+
+        /**
+         * @brief Умножить каждый элемент матрицы на заданное число.
+         * @param factor Множитель.
+         * @return Масштабированная матрица.
+         */
+        Matrix operator*(const float factor) const;
+
+        /**
+         * @brief Умножить каждый элемент матрицы на заданное число inplace.
+         * @param factor Множитель.
+         * @return Масштабированная матрица.
+         */
+        Matrix& operator *=(const float factor);
+
+        /**
+         * @brief Прибавить к каждому элементу матрицы заданное число.
+         * @param addend Слагаемое.
+         * @return Матрица после сложения элементов с указанным слагаемым.
+         */
+        Matrix operator+(const float addend) const;
+
     private:
         /**
          * @brief Указатель на память, в которой хранятся элементы матрицы.
@@ -212,6 +278,8 @@ namespace matrix_library {
          * @details Если данная матрица является подматрицей другой матрицы, то нужно знать исходное количество столбцов для верной адресации элементов.
          */
         size_t original_column_count_{0};
+
+        const float precision_ {1e-6};
     };
 }
 
