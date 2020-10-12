@@ -392,5 +392,16 @@ namespace matrix_library {
         return res;
     }
 
+    Matrix Matrix::transpose() const {
+        Matrix res(get_column_count(), get_row_count());
+#pragma omp parallel for collapse(2) default(none) shared(res)
+        for (size_t i = 0; i < row_count_; ++i) {
+            for (size_t j = 0; j < column_count_; ++j) {
+                res.get_element(j, i) = get_element(i, j);
+            }
+        }
+        return res;
+    }
+
 
 }

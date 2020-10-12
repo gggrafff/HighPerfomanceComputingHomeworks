@@ -232,6 +232,12 @@ namespace matrix_library {
          */
         Matrix operator+(const float addend) const;
 
+        /**
+         * @brief Транспонировать матрицу.
+         * @return Транспонированная копия.
+         */
+        Matrix transpose() const;
+
     private:
         /**
          * @brief Указатель на память, в которой хранятся элементы матрицы.
