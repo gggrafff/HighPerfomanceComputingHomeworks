@@ -5,3 +5,4 @@ project(hw6_cuda CUDA)
 set(CMAKE_CUDA_STANDARD 17)
 
 add_subdirectory(SimpleFilter)
+add_subdirectory(MedianFilter)
