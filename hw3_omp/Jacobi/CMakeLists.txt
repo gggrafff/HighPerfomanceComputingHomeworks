@@ -1,6 +1,6 @@
 project(Jacobi)
 
-add_subdirectory(MatrixLibrary)
+# add_subdirectory(MatrixLibrary)
 add_subdirectory(LinearSystemsLibrary)
 
 set(TARGET_NAME Jacobi)
