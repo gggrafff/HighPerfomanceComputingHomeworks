@@ -24,12 +24,13 @@ add_library(${TARGET_NAME}_shared SHARED $<TARGET_OBJECTS:${TARGET_NAME}_object>
 add_library(${TARGET_NAME}_static STATIC $<TARGET_OBJECTS:${TARGET_NAME}_object>)
 
 find_package(BLAS REQUIRED)
+find_package(OpenMP REQUIRED)
 message(STATUS "BLAS found: ${BLAS_LIBRARIES}")
 
 foreach(target ${TARGET_NAME}_object ${TARGET_NAME}_shared ${TARGET_NAME}_static)
     # Include
     target_include_directories(${target} PRIVATE "${BLAS_INCLUDE_DIRS}")
-    target_link_libraries(${target} "${BLAS_LIBRARIES}")
+    target_link_libraries(${target} "${BLAS_LIBRARIES};OpenMP::OpenMP_CXX")
 endforeach(target)
 
 foreach(target ${TARGET_NAME}_shared ${TARGET_NAME}_static)
